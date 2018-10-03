@@ -1,0 +1,23 @@
+---
+version: '3'
+services:
+  aerospike:
+    container_name: test-aerospike
+    image: aerospike
+    ports:
+      - 3000:3000
+    volumes:
+      - ./data:/opt/aerospike/data
+      - ./etc:/etc/aerospike
+    command: ['--config-file', '/etc/aerospike/aerospike.conf']
+    ulimits:
+      nproc:  65535
+      nofile:
+        soft: 64000
+        hard: 64000
+    restart: always
+  amc:
+    container_name: test-amc
+    image: felixsanz/aerospike-amc
+    ports:
+      - 8081:8081
